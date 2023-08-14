@@ -20,6 +20,7 @@ const getClients = (req, res)=> {
  }
  
  
+ 
  const getClient = (req, res)=> {
 
   const {id} = req.params

@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const { getClients, getClient } = require('../controllers/clients.Controller')
+const { getCities, getCity } = require('../controllers/cities.Controller')
 
-router.get("/clients", getClients)
-router.get("/client/:id", getClient)
+router.get("/cities", getCities)
+router.get("/city/:id", getCity)
 
 
 module.exports = router

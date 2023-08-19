@@ -3,20 +3,24 @@ const {Schema, model, Types} = require('mongoose')
 
 const schemaCity = new Schema({
     
-    photo: {
+    image: {
         type: String,
-        require: true,
+        require: false
     },
     name: {
         type: String,
-        require: true,
+        require: true
     },
     country: {
         type: String,
-        require: true,
+        require: true
+    },
+    details: {
+        type: String,
+        require: true
     }
 })
 
-const City = model("City",schemaCity)
+const City = model("City", schemaCity)
 
 module.exports = City

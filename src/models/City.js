@@ -18,6 +18,10 @@ const schemaCity = new Schema({
     details: {
         type: String,
         require: true
+    },
+    moreDetails: {
+        type: String,
+        require: false
     }
 })
 

@@ -49,7 +49,7 @@ const addCity = async (req, res) => {
 
 const addCities = async (req, res) => {
   try {
-    const newCities = req.body; // Supongamos que las ciudades nuevas se envían en el cuerpo de la solicitud como un array
+    const newCities = req.body; //las ciudades nuevas se envían en el cuerpo de la solicitud como un array
 
     const addedCities = await City.insertMany(newCities);
 

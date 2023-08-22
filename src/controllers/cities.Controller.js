@@ -2,12 +2,17 @@ const City = require("../models/City");
 
 const getCities = async (req, res) => {
   try {
-    let filter = {}; // Definoun filtro vacío por defecto
+    let filter = {}; // Defino un filtro vacío por defecto
 
     // Si se proporciona el parámetro de consulta 'filter', lo usamos para filtrar
     if (req.query.filter) {
       const filterRegex = new RegExp(req.query.filter, "i"); // Uso la i para no distinguir mayúsculas y minúsculas
-      filter = { name: filterRegex };
+      filter = {
+        $or: [
+          { name: filterRegex }, // Filtrar por nombre de ciudad
+          { country: filterRegex }, // Filtrar por nombre de país
+        ],
+      };
     }
 
     const cities = await City.find(filter);
@@ -63,14 +68,16 @@ const updateCity = async (req, res) => {
     const updatedData = req.body; // Los datos actualizados de la ciudad
 
     // Encuentra la ciudad por su ID y la actuliza
-    const updatedCity = await City.findByIdAndUpdate(id, updatedData, { new: true });
+    const updatedCity = await City.findByIdAndUpdate(id, updatedData, {
+      new: true,
+    });
 
     if (!updatedCity) {
-      return res.status(404).json({ message: 'City not found' });
+      return res.status(404).json({ message: "City not found" });
     }
 
     res.status(200).json({
-      message: 'City has been updated',
+      message: "City has been updated",
       city: updatedCity,
     });
   } catch (err) {

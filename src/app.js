@@ -20,6 +20,18 @@ app.get("/api/cities", (req, res) => {
   res.json(filteredCities); // esto devuelve los datos de las ciudades filtradas como respuesta de la API
 });
 
+/* app.get("/api/cities", (req, res) => {
+  const filter = req.query.filter.toLowerCase();
+
+  const filteredCities = cities.filter((city) => {
+    const cityNameMatch = city.name.toLowerCase().includes(filter);
+    const countryNameMatch = city.country.toLowerCase().includes(filter);
+    return cityNameMatch || countryNameMatch;
+  });
+
+  res.json(filteredCities);
+}); */
+
 app.listen(5000, () => {
   console.log("listening on port 5000");
 });

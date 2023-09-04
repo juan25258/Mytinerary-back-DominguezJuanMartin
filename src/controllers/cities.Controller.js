@@ -22,10 +22,19 @@ const getCities = async (req, res) => {
   }
 };
 
-const getCity = (req, res) => {
+/* const getCity = (req, res) => {
   const { id } = req.params;
 
   const { data } = req.required;
+}; */
+ const getCity = async (req,res)=>{
+  const id = req.params.id    
+  try{
+      const getCity = await City.findById(id)
+      res.json({success:true, response:getCity})
+  }catch(error){
+      res.json({success:false, response:"Error '_id' of city not valid."})
+  }
 };
 
 const addCity = async (req, res) => {

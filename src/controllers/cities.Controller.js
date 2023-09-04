@@ -27,13 +27,19 @@ const getCities = async (req, res) => {
 
   const { data } = req.required;
 }; */
- const getCity = async (req,res)=>{
-  const id = req.params.id    
-  try{
-      const getCity = await City.findById(id)
-      res.json({success:true, response:getCity})
-  }catch(error){
-      res.json({success:false, response:"Error '_id' of city not valid."})
+
+const getCity = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const city = await City.findById(id).populate('itineraries');
+    
+    if (!city) {
+      return res.status(404).json({ message: "City not found" });
+    }
+    
+    res.status(200).json(city);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 

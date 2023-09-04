@@ -1,4 +1,4 @@
-const Itinerary = require("../models/Itinerary");
+/* const Itinerary = require("../models/Itinerary");
 
 module.exports = {
   getItineraries: async (req, res) => {
@@ -89,4 +89,83 @@ module.exports = {
       res.status(500).json({ error: "Error fetching itinerary details" });
     }
   },
+}; */
+
+const Itinerary = require("../models/Itinerary");
+
+const getItineraries = async (req, res) => {
+  try {
+    const itineraries = await Itinerary.find();
+    res.status(200).json(itineraries);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
+
+const getItinerary = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const itinerary = await Itinerary.findById(id);
+    
+    if (!itinerary) {
+      return res.status(404).json({ message: "Itinerary not found" });
+    }
+    
+    res.status(200).json(itinerary);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const addItinerary = async (req, res) => {
+  try {
+    const payload = req.body;
+    const newItinerary = await Itinerary.create(payload);
+    res.status(201).json({
+      message: "Itinerary has been added",
+      itinerary: newItinerary,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const updateItinerary = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+    const updatedItinerary = await Itinerary.findByIdAndUpdate(id, updatedData, {
+      new: true,
+    });
+
+    if (!updatedItinerary) {
+      return res.status(404).json({ message: "Itinerary not found" });
+    }
+
+    res.status(200).json({
+      message: "Itinerary has been updated",
+      itinerary: updatedItinerary,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const deleteItinerary = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Itinerary.findByIdAndDelete(id);
+    res.status(200).json({ message: "Itinerary has been deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = {
+  getItineraries,
+  getItinerary,
+  addItinerary,
+  updateItinerary,
+  deleteItinerary,
+};
+

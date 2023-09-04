@@ -21,6 +21,13 @@ const schemaCity = new Schema({
     type: String,
     
   },
+  itineraries: [
+    {
+    type: Types.ObjectId,
+    ref: "Itinerary",
+    
+  }
+  ]
 });
 
 const City = model("City", schemaCity);

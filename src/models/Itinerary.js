@@ -2,28 +2,7 @@ const { Schema, model, Types } = require("mongoose");
 
 const schemaItinerary = new Schema({
   cityId: {
-    type: Types.ObjectId, // Referencia al _id de la ciudad
-    required: true,
-  },
-  image: {
-    type: String,
-    require: false,
-  },
-  name: {
-    type: String,
-    require: true,
-  },
-  country: {
-    type: String,
-    require: true,
-  },
-  details: {
-    type: String,
-    
-  },
-  moreDetails: {
-    type: String,
-    
+    type:String, 
   },
   Price: {
     type: Number,
@@ -34,8 +13,7 @@ const schemaItinerary = new Schema({
     
   },
   Hashtag: {
-    type: String,
-    
+    type: String,  
   }
 });
 

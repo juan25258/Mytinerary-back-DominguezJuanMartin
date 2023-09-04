@@ -1,9 +1,6 @@
 const { Schema, model, Types } = require("mongoose");
 
 const schemaItinerary = new Schema({
-  cityId: {
-    type:String, 
-  },
   Price: {
     type: Number,
    
@@ -14,7 +11,14 @@ const schemaItinerary = new Schema({
   },
   Hashtag: {
     type: String,  
-  }
+  },
+
+  city: [
+    {
+      type: Types.ObjectId,
+      ref: 'City'
+    }
+  ]
 });
 
 const Itinerary = model("Itinerary", schemaItinerary);

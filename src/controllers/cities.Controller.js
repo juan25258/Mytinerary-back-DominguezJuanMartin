@@ -15,7 +15,7 @@ const getCities = async (req, res) => {
       };
     }
 
-    const cities = await City.find(filter);
+    const cities = await City.find(filter).populate( 'itineraries' );
     res.status(200).json(cities);
   } catch (err) {
     res.status(500).json({ message: err.message });

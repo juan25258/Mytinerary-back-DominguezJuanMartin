@@ -24,7 +24,7 @@ const schemaCity = new Schema({
   itineraries: [
     {
     type: Types.ObjectId,
-    ref: "Itinerary",
+    ref: 'Itinerary',
     
   }
   ]

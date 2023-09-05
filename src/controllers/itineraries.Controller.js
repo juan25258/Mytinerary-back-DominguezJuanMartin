@@ -104,8 +104,8 @@ const getItineraries = async (req, res) => {
 
 const getItinerary = async (req, res) => {
   try {
-    const { id } = req.params;
-    const itinerary = await Itinerary.findById(id).populate('city');
+    const { id } = req.params.id;
+    const itinerary = await Itinerary.findById(id);
     
     if (!itinerary) {
       return res.status(404).json({ message: "Itinerary not found" });

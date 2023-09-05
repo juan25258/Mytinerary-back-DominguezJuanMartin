@@ -3,7 +3,7 @@ const { Schema, model, Types } = require("mongoose");
 const schemaCity = new Schema({
   image: {
     type: String,
-    require: false,
+    require: true,
   },
   name: {
     type: String,
@@ -25,7 +25,6 @@ const schemaCity = new Schema({
     {
     type: Types.ObjectId,
     ref: 'Itinerary',
-    
   }
   ]
 });

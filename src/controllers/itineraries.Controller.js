@@ -91,6 +91,7 @@ module.exports = {
   },
 }; */
 
+const City = require("../models/City");
 const Itinerary = require("../models/Itinerary");
 
 const getItineraries = async (req, res) => {
@@ -104,20 +105,20 @@ const getItineraries = async (req, res) => {
 
 const getItinerary = async (req, res) => {
   try {
-    const { id } = req.params.id;
+    const { id } = req.params;
     const itinerary = await Itinerary.findById(id);
-    
+
     if (!itinerary) {
       return res.status(404).json({ message: "Itinerary not found" });
     }
-    
+
     res.status(200).json(itinerary);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-const addItinerary = async (req, res) => {
+/* const addItinerary = async (req, res) => {
   try {
     const payload = req.body;
     const newItinerary = await Itinerary.create(payload);
@@ -128,15 +129,86 @@ const addItinerary = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+}; */
+const addItineraries = async(req,res) => {
+  try {
+    const newItineraries = req.body;
+    const addedItineraries = await Itinerary.insertMany(newItineraries);
+
+    res.status(200).json({
+      message: "Itineraries has been added",
+      itineraries: addedItineraries,
+    });
+  } catch (err) {
+    res.status(500).json({message: err.message});
+  }
 };
+
+const addItinerary = async (req, res) => {
+  try {
+    let { id } = req.query;
+    let cityFound = await City.findById(id);
+    let newItinerary = await Itinerary.create({
+      Price: Itinerary.Price,
+      Likes: Itinerary.Likes,
+      Hashtag: Itinerary.Hashtag,
+      city: cityFound
+    });
+    await cityFound.updateOne({ itineraries: [...cityFound.itineraries, newItinerary] });
+
+    let cityFoundUpdated = await City.findById(id).populate('itineraries')
+
+    res.status(200).json({
+      message: "Itinerary has been updated successfully",
+      City: cityFoundUpdated
+    });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+/* const addItinerary = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const cityFound = await City.findById(id);
+
+    if (!cityFound) {
+      return res.status(404).json({ message: "City not found" });
+    }
+
+    const newItinerary = await Itinerary.create({
+      Price,
+      Likes,
+      Hashtag,
+      city: cityFound._id, // Asigna el ObjectId de la ciudad al itinerario
+    });
+
+    // Agrega el ObjectId del nuevo itinerario a la lista de itinerarios de la ciudad
+    cityFound.itineraries.push(newItinerary._id);
+    await cityFound.save();
+
+    let cityFoundUpdated = await City.findById(id);
+
+    res.status(200).json({
+      message: "Itinerary has been updated successfully",
+      City: cityFoundUpdated,
+    });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+}; */
 
 const updateItinerary = async (req, res) => {
   try {
     const { id } = req.params;
     const updatedData = req.body;
-    const updatedItinerary = await Itinerary.findByIdAndUpdate(id, updatedData, {
-      new: true,
-    });
+    const updatedItinerary = await Itinerary.findByIdAndUpdate(
+      id,
+      updatedData,
+      {
+        new: true,
+      }
+    );
 
     if (!updatedItinerary) {
       return res.status(404).json({ message: "Itinerary not found" });
@@ -164,8 +236,8 @@ const deleteItinerary = async (req, res) => {
 module.exports = {
   getItineraries,
   getItinerary,
+  addItineraries,
   addItinerary,
   updateItinerary,
   deleteItinerary,
 };
-

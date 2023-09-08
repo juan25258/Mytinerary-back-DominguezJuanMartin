@@ -9,10 +9,10 @@ const schemaItinerary = new Schema({
     type: Number,
     require: true,
   },
-  Hashtag: {
+  Hashtag: [{
     type: String,
     require: true,
-  },
+  }],
   city: 
   {
     type: Types.ObjectId,

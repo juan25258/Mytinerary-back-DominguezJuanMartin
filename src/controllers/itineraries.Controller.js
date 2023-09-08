@@ -146,26 +146,37 @@ const addItineraries = async(req,res) => {
 
 const addItinerary = async (req, res) => {
   try {
-    let { id } = req.query;
-    let cityFound = await City.findById(id);
-    let newItinerary = await Itinerary.create({
-      Price: Itinerary.Price,
-      Likes: Itinerary.Likes,
-      Hashtag: Itinerary.Hashtag,
-      city: cityFound
-    });
-    await cityFound.updateOne({ itineraries: [...cityFound.itineraries, newItinerary] });
+    const { id } = req.query;
+    const { Price, Likes, Hashtag } = req.body; // Obtén los valores del cuerpo de la solicitud
 
-    let cityFoundUpdated = await City.findById(id).populate('itineraries')
+    const cityFound = await City.findById(id);
+
+    if (!cityFound) {
+      return res.status(404).json({ message: "City not found" });
+    }
+
+    const newItinerary = await Itinerary.create({
+      Price,
+      Likes,
+      Hashtag,
+      city: cityFound._id, // Asigna el ObjectId de la ciudad al itinerario
+    });
+
+    // Agrega el ObjectId del nuevo itinerario a la lista de itinerarios de la ciudad
+    cityFound.itineraries.push(newItinerary._id);
+    await cityFound.save();
+
+    const cityFoundUpdated = await City.findById(id).populate('itineraries');
 
     res.status(200).json({
       message: "Itinerary has been updated successfully",
-      City: cityFoundUpdated
+      City: cityFoundUpdated,
     });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
+
 
 /* const addItinerary = async (req, res) => {
   try {

@@ -1,25 +1,25 @@
 const { Schema, model, Types } = require("mongoose");
 
 const schemaItinerary = new Schema({
-  Image:{
+  image:{
     type: String,
   },
-  Name:{
+  name:{
 type: String,
   },
-  Price: {
+  price: {
     type: Number,
     //require: true,
   },
-  Likes: {
+  likes: {
     type: Number,
     //require: true,
   },
-  Hashtag: [{
+  hashtag: [{
     type: String,
     //require: true,
   }],
-  Duration:{
+  duration:{
     type: String,
   },
   city: 

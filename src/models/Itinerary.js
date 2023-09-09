@@ -21,6 +21,6 @@ const schemaItinerary = new Schema({
   ]
 });
 
-const Itinerary = model("Itinerary", schemaItinerary);
+const Itinerary = model('Itinerary', schemaItinerary);
 
 module.exports = Itinerary;

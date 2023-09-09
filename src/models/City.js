@@ -25,11 +25,10 @@ const schemaCity = new Schema({
     {
     type: Types.ObjectId,
     ref: 'Itinerary',
-    
   }
   ]
 });
 
-const City = model("City", schemaCity);
+const City = model('City', schemaCity);
 
 module.exports = City;

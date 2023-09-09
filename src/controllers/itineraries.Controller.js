@@ -41,7 +41,7 @@ const addItineraries = async(req,res) => {
 const addItineraryInCity = async (req, res) => {
   try {
     const { id } = req.query;
-    const { image, name, price, likes, hashtag, duration } = req.body; // Obtén los valores del cuerpo de la solicitud
+    const { image, name, price, likes, hashtag, duration } = req.body; 
 
     const cityFound = await City.findById(id);
 

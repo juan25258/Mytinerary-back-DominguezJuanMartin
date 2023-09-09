@@ -3,15 +3,15 @@ const { Schema, model, Types } = require("mongoose");
 const schemaCity = new Schema({
   image: {
     type: String,
-    require: false,
+    //require: true,
   },
   name: {
     type: String,
-    require: true,
+    //require: true,
   },
   country: {
     type: String,
-    require: true,
+    //require: true,
   },
   details: {
     type: String,

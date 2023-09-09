@@ -1,4 +1,5 @@
 const City = require("../models/City");
+const Itinerary = require("../models/Itinerary");
 
 const getCities = async (req, res) => {
   try {
@@ -15,18 +16,12 @@ const getCities = async (req, res) => {
       };
     }
 
-    const cities = await City.find(filter);
+    const cities = await City.find(filter).populate('itineraries');
     res.status(200).json(cities);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
-
-/* const getCity = (req, res) => {
-  const { id } = req.params;
-
-  const { data } = req.required;
-}; */
 
 const getCity = async (req, res) => {
   try {
@@ -61,6 +56,26 @@ const addCity = async (req, res) => {
     res.status(500).json({ message: err });
   }
 };
+
+/* const addCity = async(req, res)=>{
+  try{
+    let { id } = req.query
+    let addedItinerary = await Itinerary.findById(id)
+    let newCity = await City.create(
+    'Price Likes Hashtag city _id'
+  )
+  await addedItinerary.updateOne({city:[...addedItinerary.city, newCity]})
+  
+  let addedItineraryUpdated = await Itinerary.findById(id)
+
+  res.status(200).json({
+    message:"Itinerary has been updated successfully",
+    Itinerary: addedItineraryUpdated
+  })
+  }catch(err){
+    res.status(400).json({message: err.message});
+  }
+} */
 
 const addCities = async (req, res) => {
   try {

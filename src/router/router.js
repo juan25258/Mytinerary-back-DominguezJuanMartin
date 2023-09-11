@@ -4,6 +4,7 @@ const { getCities, getCity, addCity, updateCity, deleteCity, addCities } = requi
 const { getItineraries, getItinerary,addItineraries, updateItinerary, deleteItinerary, addItineraryInCity } = require('../controllers/itineraries.Controller');
 const authRouter = require('./auth');
 
+
 // Rutas para ciudades
 router.get("/cities", getCities);
 router.get("/city/:id", getCity);
@@ -21,7 +22,7 @@ router.put("/itinerary/:id", updateItinerary);
 router.delete("/itinerary/:id", deleteItinerary); 
 
 
-router.use("/user", authRouter)
+router.use("/user", authRouter);
 
 
 

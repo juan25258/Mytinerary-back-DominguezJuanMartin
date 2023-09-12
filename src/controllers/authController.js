@@ -22,18 +22,18 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { password, email } = req.body;
-    const userFounded = await User.findOne({ email: email });
+      res.status(200).json({
+        message: 'Successfully logged id',
+        token: req.token,
+        user:  {
+          email: req.user.email,
+          id: req.user._id,
+          //y todos los demas datos que quiera.
+          //si quiero todos los datos escribo solo user: req.user
+        }
+      })
 
-    if (userFounded) {
-      if (verifyPassword(password, userFounded.password)) {
-        return res.status(200).json({ message: "successfully logged in", user: userFounded });
-      } else {
-        return res.status(400).json({ message: "wrong password" });
-      }
-    } else {
-      res.status(400).json({ message: "User not found" });
-    }
+
   } catch (e) {
     res.status(400).json({ message: e.message });
   }

@@ -17,16 +17,15 @@ const schemaUser = new Schema({
         type: String,
         require: true,
     },
-    urlimage: {
+    image: {
         type: String
     },
     country: {
         type: String,
-        require: true,
     }
 
 })
 
-const User = model("user", schemaUser);
+const User = model("User", schemaUser);
 
 module.exports = User; 

@@ -32,14 +32,30 @@ const login = async (req, res) => {
           //si quiero todos los datos escribo solo user: req.user
         }
       })
-
-
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
 };
 
+const authenticated = async(req, res) => {
+  try {
+    res.status(200).json({
+      message: 'Successfully authenticated ',
+      token: req.token,
+      user:  {
+        email: req.user.email,
+        id: req.user._id,
+        //y todos los demas datos que quiera.
+        //si quiero todos los datos escribo solo user: req.user
+      }
+    })
+} catch (e) {
+  res.status(400).json({ message: e.message });
+}
+}
+
 module.exports = {
   register,
   login,
+  authenticated,
 };

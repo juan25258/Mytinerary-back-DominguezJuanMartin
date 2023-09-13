@@ -1,6 +1,30 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const passport = require("passport");
+const { Strategy, ExtractJwt } = require("passport-jwt");
+
+const passportVerificator = passport.use(
+  new Strategy(
+    {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: "claveSuperSecreta"
+    },
+    async (payload, done) => {
+      try {
+        let userFounded = await User.findOne({ email: payload.email });
+
+        if (userFounded) {
+          return done(null, userFounded);
+        } else {
+          return done(null);
+        }
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
+);
 
 const hashPassword = (req, res, next) => {
   try {
@@ -45,7 +69,7 @@ const generateToken = (req, res, next) => {
   try {
     let secretKey = "claveSuperSecreta";
 
-    let token = jwt.sign({ email: req.body.email }, secretKey, {
+    let token = jwt.sign({ email: req.user.email }, secretKey, {
       expiresIn: 60 * 3,
     }); //seg * n, el tiempo depende del tipo de aplicacion. Luego de ese tiempo la app se desloguea automatica//.
 
@@ -61,4 +85,5 @@ module.exports = {
   verifyPassword,
   verifyUserExists,
   generateToken,
+  passportVerificator,
 };

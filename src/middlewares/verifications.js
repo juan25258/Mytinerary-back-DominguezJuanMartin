@@ -4,9 +4,9 @@ const Joi = require("joi");
 const userSchema = Joi.object({
     name: Joi.string(),
     lastname: Joi.string(),
-    email: Joi.string().email().min(6).max(20).required(),
+    email: Joi.string().email().min(6).max(30).required(),
     password: Joi.string().alphanum().min(8).max(16).required(),
-    urlimage: Joi.string(), 
+    image: Joi.string().allow(''), 
     country: Joi.string(),
 
 });
@@ -25,4 +25,5 @@ const verifyAuthData = (req, res, next) => {
 
 module.exports = {
     verifyAuthData,
+    userSchema,
 };

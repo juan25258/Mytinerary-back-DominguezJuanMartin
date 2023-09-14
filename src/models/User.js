@@ -18,7 +18,7 @@ const schemaUser = new Schema({
         require: true,
     },
     image: {
-        type: String
+        type: String,
     },
     country: {
         type: String,

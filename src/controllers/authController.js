@@ -1,6 +1,15 @@
 const { verifyPassword } = require("../middlewares/Auth");
 const User = require("../models/User");
 
+const getRegisteredUsers = async (req, res) => {
+  try {
+    const registeredUsers = await User.find();
+    res.status(200).json(registeredUsers);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 const register = async (req, res) => {
   try {
     const payload = req.body;
@@ -64,6 +73,7 @@ const logout = async (req, res) => {
 
 
 module.exports = {
+  getRegisteredUsers,
   register,
   login,
   authenticated,

@@ -1,11 +1,12 @@
 const express = require('express');
-const { register, login, authenticated, logout } = require('../controllers/authController');
+const { register, login, authenticated, logout, getRegisteredUsers } = require('../controllers/authController');
 const { verifyAuthData } = require('../middlewares/verifications');
 const { hashPassword, verifyUserExists, verifyPassword, generateToken, passportVerificator} = require('../middlewares/Auth');
 
 
 const authRouter = express.Router()
 
+authRouter.get('/registeredUsers', getRegisteredUsers);
 authRouter.post('/register',verifyAuthData, hashPassword, register);
 authRouter.post('/login', verifyAuthData, verifyUserExists, verifyPassword, generateToken, login);
 authRouter.post('/authenticated', passportVerificator.authenticate("jwt", {session: false}), generateToken, authenticated);
